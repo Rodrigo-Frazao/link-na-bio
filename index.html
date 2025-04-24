@@ -9,8 +9,8 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      color: #333;
+      background-color: #0f172a;
+      color: #f1f5f9;
       text-align: center;
       padding: 2rem;
     }
@@ -25,34 +25,50 @@
     p.desc {
       font-size: 1rem;
       margin-bottom: 2rem;
-      color: #666;
+      color: #cbd5e1;
     }
     .link-btn {
       display: block;
       margin: 0.5rem 0;
       padding: 1rem;
-      background-color: #6c63ff;
+      background-color: #1e3a8a;
       color: white;
       text-decoration: none;
       border-radius: 8px;
       font-weight: bold;
     }
     .link-btn:hover {
-      background-color: #594fe0;
+      background-color: #1d4ed8;
     }
     .ads-section, .content-section {
-      background: #fff;
+      background: #1e293b;
       border-radius: 10px;
       padding: 1rem;
       margin: 1.5rem 0;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(255,255,255,0.05);
     }
     footer {
       margin-top: 3rem;
       font-size: 0.8rem;
-      color: #999;
+      color: #94a3b8;
     }
-  </style>
+  
+    .scroll-down {
+      margin-top: 1rem;
+      font-size: 0.95rem;
+      color: #666;
+      animation: bounce 2s infinite;
+    }
+    .scroll-down .arrow {
+      display: inline-block;
+      margin-top: 0.3rem;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+    </style>
+    
 </head>
 <body>
   <div class="container">
@@ -63,6 +79,11 @@
     <a class="link-btn" href="#">🎥 Assista meu canal no YouTube</a>
     <a class="link-btn" href="#">📸 Me siga no Instagram</a>
     <a class="link-btn" href="#">💬 Entre no grupo do WhatsApp</a>
+    <div class="scroll-down">
+      <span>Role para ver mais</span><br>
+      <span class="arrow">⬇️</span>
+    </div>
+
 
     <div class="ads-section">
       <p><strong>Anúncio</strong></p>
@@ -83,6 +104,12 @@
       <h2>Dica da Semana ✨</h2>
       <p>Você sabia que pequenas mudanças diárias podem gerar grandes transformações? Comece hoje dando um passo simples na direção dos seus sonhos.</p>
     </div>
+    <div class="content-section">
+      <h2>📘 Meu eBook: O Mapa da Sua Mente</h2>
+      <p>Descubra o que está te travando e como reprogramar sua mente para avançar com confiança.</p>
+      <a class="link-btn" href="https://go.hotmart.com/A99365809U" target="_blank">Acesse a página do eBook</a>
+    </div>
+
 
     <footer>
       <p><a href="privacidade.html">Política de Privacidade</a> | <a href="termos.html">Termos de Uso</a></p>
