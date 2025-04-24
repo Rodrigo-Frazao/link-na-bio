@@ -2,122 +2,124 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7506626004082031"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Links importantes, conteúdos e recomendações. Acesse tudo em um só lugar!">
-  <title>Meus Links | Magrinho RJ</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>magrinhorj.online</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #0f172a;
-      color: #f1f5f9;
-      text-align: center;
-      padding: 2rem;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      background-color: #0f0f0f;
+      color: #eaeaea;
+      line-height: 1.6;
+    }
+    header {
+      background-color: #1f1f1f;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      color: #61dafb;
+      margin: 0;
+    }
+    nav a {
+      color: #eaeaea;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 600;
+    }
+    nav a:hover {
+      color: #61dafb;
     }
     .container {
-      max-width: 500px;
-      margin: 0 auto;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    p.desc {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      color: #cbd5e1;
-    }
-    .link-btn {
-      display: block;
-      margin: 0.5rem 0;
+    .highlight {
+      font-size: 1.25rem;
+      text-align: center;
+      background-color: #1a1a1a;
       padding: 1rem;
-      background-color: #1e3a8a;
-      color: white;
-      text-decoration: none;
       border-radius: 8px;
-      font-weight: bold;
+      margin-bottom: 2rem;
     }
-    .link-btn:hover {
-      background-color: #1d4ed8;
+    .dica, .ebook {
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
-    .ads-section, .content-section {
-      background: #1e293b;
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 1.5rem 0;
-      box-shadow: 0 2px 8px rgba(255,255,255,0.05);
+    .dica h2, .ebook h2 {
+      color: #61dafb;
+      margin-top: 0;
+    }
+    .ebook a {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #61dafb;
+      color: #0f0f0f;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .scroll-tip {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #61dafb;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
     }
     footer {
-      margin-top: 3rem;
-      font-size: 0.8rem;
-      color: #94a3b8;
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      color: #555;
     }
-  
-    .scroll-down {
-      margin-top: 1.5rem;
-      font-size: 1.15rem;
-      color: #facc15;
-      font-weight: bold;
-      animation: bounce 2s infinite;
-    }
-    .scroll-down .arrow {
-      display: inline-block;
-      margin-top: 0.3rem;
-      font-size: 1.5rem;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(5px); }
-    }
-    </style>
-    
+  </style>
 </head>
 <body>
+  <header>
+    <h1>magrinhorj.online</h1>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="blog.html">Blog</a>
+      <a href="termos.html">Termos</a>
+    </nav>
+  </header>
+
   <div class="container">
-    <h1>Oi! Sou o Magrinho RJ</h1>
-    <p class="desc">Aqui você encontra meus links mais importantes, conteúdos e recomendações. Seja bem-vindo(a)!</p>
-
-    <a class="link-btn" href="#">📘 Baixe meu eBook gratuito</a>
-    <a class="link-btn" href="#">🎥 Assista meu canal no YouTube</a>
-    <a class="link-btn" href="#">📸 Me siga no Instagram</a>
-    <div class="scroll-down">
-      <span>Role para ver mais</span><br>
-      <span class="arrow">⬇️</span>
+    <div class="highlight">
+      <p>Seja bem-vindo! Aqui você encontra conteúdos para transformar sua mente e sua vida.</p>
     </div>
 
+    <div class="scroll-tip">⬇ Role para baixo ⬇</div>
 
-    <div class="ads-section">
-      <p><strong>Anúncio</strong></p>
-      <!-- Espaço para o código do Google AdSense -->
-      <!-- <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="SEU_CODIGO"
-           data-ad-slot="SEU_SLOT"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-      </script> -->
-      <p style="font-size: 0.9rem; color: #888;">(Seu anúncio será exibido aqui)</p>
+    <div class="dica">
+      <h2>Dica da Semana</h2>
+      <p>Antes de dormir, escreva 3 coisas que você fez bem durante o dia. Isso treina seu cérebro a focar no positivo e reforça sua autoestima.</p>
     </div>
 
-    <div class="content-section">
-      <h2>Dica da Semana ✨</h2>
-      <p>Você sabia que pequenas mudanças diárias podem gerar grandes transformações? Comece hoje dando um passo simples na direção dos seus sonhos.</p>
+    <div class="ebook">
+      <h2>📘 Conheça o eBook: O Mapa da Sua Mente</h2>
+      <p>Descubra o que está te travando (e como reprogramar). Um guia direto, prático e transformador.</p>
+      <a href="https://go.hotmart.com/A99365809U" target="_blank">Quero Acessar Agora</a>
     </div>
-    <div class="content-section">
-      <h2>📘 Meu eBook: O Mapa da Sua Mente</h2>
-      <p>Descubra o que está te travando e como reprogramar sua mente para avançar com confiança.</p>
-      <a class="link-btn" href="https://go.hotmart.com/A99365809U" target="_blank">Acesse a página do eBook</a>
-    </div>
-
-
-    <footer>
-      <p><a href="privacidade.html">Política de Privacidade</a> | <a href="termos.html">Termos de Uso</a></p>
-      <p>&copy; 2025 - Seu Nome / Projeto</p>
-    </footer>
   </div>
+
+  <footer>
+    &copy; 2025 magrinhorj.online — Todos os direitos reservados.
+  </footer>
 </body>
 </html>
