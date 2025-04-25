@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clima Atual</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f5f5;
+      margin: 0;
+    }
+    #weather {
+      background: white;
+      padding: 20px 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      font-size: 1.5rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div id="weather">Carregando clima...</div>
+
+  <script>
+    const weatherDiv = document.getElementById("weather");
+
+    async function getLocation() {
+      const res = await fetch('https://ipinfo.io/json?token=6df3d98dc38058');
+      const data = await res.json();
+      const [lat, lon] = data.loc.split(',');
+      return { lat, lon, city: data.city };
+    }
+
+    async function getWeather(lat, lon) {
+      const apiKey = '9274a753db7aa09db65213be8308d139';
+      const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`);
+      return await res.json();
+    }
+
+    function getEmoji(description) {
+      const desc = description.toLowerCase();
+      if (desc.includes("chuva")) return "🌧️";
+      if (desc.includes("nuvem")) return "☁️";
+      if (desc.includes("neve")) return "❄️";
+      if (desc.includes("nevoeiro") || desc.includes("névoa")) return "🌫️";
+      if (desc.includes("tempestade") || desc.includes("trovoada")) return "🌩️";
+      if (desc.includes("sol") || desc.includes("claro")) return "☀️";
+      return "🌤️";
+    }
+
+    async function showWeather() {
+      try {
+        const { lat, lon, city } = await getLocation();
+        const weather = await getWeather(lat, lon);
+        const temp = Math.round(weather.main.temp);
+        const emoji = getEmoji(weather.weather[0].description);
+        weatherDiv.innerHTML = `${emoji} ${temp}°C em ${city}`;
+      } catch (e) {
+        weatherDiv.innerHTML = "Não foi possível obter o clima 😔";
+      }
+    }
+
+    showWeather();
+  </script>
+</body>
+</html>
