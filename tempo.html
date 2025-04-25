@@ -68,5 +68,46 @@
 
     showWeather();
   </script>
+  <script>
+  const weatherDiv = document.getElementById("weather");
+
+  async function getLocation() {
+    const res = await fetch('https://ipinfo.io/json?token=6df3d98dc38058');
+    const data = await res.json();
+    const [lat, lon] = data.loc.split(',');
+    return { lat, lon, city: data.city };
+  }
+
+  async function getWeather(lat, lon) {
+    const apiKey = '9274a753db7aa09db65213be8308d139';
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`);
+    return await res.json();
+  }
+
+  function getEmoji(description) {
+    const desc = description.toLowerCase();
+    if (desc.includes("chuva")) return "🌧️";
+    if (desc.includes("nuvem")) return "☁️";
+    if (desc.includes("neve")) return "❄️";
+    if (desc.includes("nevoeiro") || desc.includes("névoa")) return "🌫️";
+    if (desc.includes("tempestade") || desc.includes("trovoada")) return "🌩️";
+    if (desc.includes("sol") || desc.includes("claro")) return "☀️";
+    return "🌤️";
+  }
+
+  async function showWeather() {
+    try {
+      const { lat, lon, city } = await getLocation();
+      const weather = await getWeather(lat, lon);
+      const temp = Math.round(weather.main.temp);
+      const emoji = getEmoji(weather.weather[0].description);
+      weatherDiv.innerHTML = `${emoji} ${temp}°C em ${city}`;
+    } catch (e) {
+      weatherDiv.innerHTML = "Não foi possível obter o clima 😔";
+    }
+  }
+
+  showWeather();
+</script>
 </body>
 </html>
