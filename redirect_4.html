@@ -22,8 +22,14 @@
     }
     p.desc {
       font-size: 1rem;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
       color: #cbd5e1;
+    }
+    #countdown {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #38bdf8;
+      margin-bottom: 2rem;
     }
     .redirect-box {
       background-color: #1e293b;
@@ -53,9 +59,22 @@
     }
   </style>
   <script>
+    // Redirecionamento após 15 segundos
     setTimeout(function () {
-      window.location.href = "https://t.me/+vtUQw1nQiNg3MzI5";
+      window.location.href = "https://privacy.com.br/profile/Magrinhorj02";
     }, 15000);
+
+    // Contador regressivo
+    let seconds = 15;
+    function updateCountdown() {
+      const countdown = document.getElementById('countdown');
+      countdown.textContent = `Aguarde... você está sendo redirecionado em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
+      seconds--;
+      if (seconds >= 0) {
+        setTimeout(updateCountdown, 1000);
+      }
+    }
+    window.onload = updateCountdown;
   </script>
 </head>
 <body>
@@ -63,19 +82,19 @@
     <div class="redirect-box">
       <h1>Você está sendo redirecionado...</h1>
       <p class="desc">Aguarde um instante, estamos te levando ao conteúdo solicitado.</p>
+      <p id="countdown"></p>
       <div class="loader"></div>
-	    <br>
-	    <br>
+      <br><br>
       <script type="text/javascript">
-	atOptions = {
-		'key' : 'd1b7ad64e08488116b4573d06e9029d7',
-		'format' : 'iframe',
-		'height' : 122,
-		'width' : 499,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
+        atOptions = {
+          'key' : 'd1b7ad64e08488116b4573d06e9029d7',
+          'format' : 'iframe',
+          'height' : 122,
+          'width' : 499,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
     </div>
 
     <footer>
