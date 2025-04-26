@@ -68,7 +68,7 @@
     let seconds = 15;
     function updateCountdown() {
       const countdown = document.getElementById('countdown');
-      countdown.textContent = `Aguarde... você está sendo redirecionado em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
+      countdown.textContent = `Aguarde... você está sendo redirecionado em ${seconds} segundo${seconds !== 1 ? 's' : ''}...Quer pular essa etapa? Toque no anuncio abaixo!`;
       seconds--;
       if (seconds >= 0) {
         setTimeout(updateCountdown, 1000);
