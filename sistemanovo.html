@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Propagandas</title>
+	<style> 
+	
+	body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.ad-btn {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+#reward img {
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
+}
+</style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Assista/Clique em 5 Propagandas para Desbloquear sua Recompensa!</h1>
+        <p>Progresso: <span id="progress">0</span>/5</p>
+
+        <div id="ads">
+            <button class="ad-btn" onclick="watchAd(1)">Propaganda 1</button>
+            <button class="ad-btn" onclick="watchAd(2)">Propaganda 2</button>
+            <button class="ad-btn" onclick="watchAd(3)">Propaganda 3</button>
+            <button class="ad-btn" onclick="watchAd(4)">Propaganda 4</button>
+            <button class="ad-btn" onclick="watchAd(5)">Propaganda 5</button>
+        </div>
+
+        <div id="reward" class="hidden">
+            <h2>Recompensa Desbloqueada!</h2>
+            <img src="sua-foto.jpg" alt="Recompensa" width="300">
+        </div>
+    </div>
+
+    <script src="script.js">let adsWatched = 0;
+const totalAds = 5;
+const progressElement = document.getElementById('progress');
+const rewardElement = document.getElementById('reward');
+
+function watchAd(adNumber) {
+    const button = document.querySelector(`.ad-btn:nth-child(${adNumber})`);
+    
+    // Verifica se a propaganda já foi assistida
+    if (button.disabled) {
+        alert('Você já assistiu essa propaganda!');
+        return;
+    }
+
+    // Simulação de assistir/clicar em propaganda
+    alert(`Assistindo Propaganda ${adNumber}...`);
+
+    adsWatched++;
+    button.disabled = true;
+    button.innerText = `Propaganda ${adNumber} (Assistida)`;
+    progressElement.innerText = adsWatched;
+
+    // Verifica se todas as propagandas foram assistidas
+    if (adsWatched === totalAds) {
+        desbloquearRecompensa();
+    }
+}
+
+function desbloquearRecompensa() {
+    document.getElementById('ads').classList.add('hidden');
+    rewardElement.classList.remove('hidden');
+}</script>
+</body>
+</html>
