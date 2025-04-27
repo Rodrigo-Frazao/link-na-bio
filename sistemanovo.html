@@ -48,10 +48,30 @@
       font-size: 28px;
       color: green;
       margin-top: 40px;
+      display: none;
     }
     #adBanner {
       margin: 30px auto;
       max-width: 468px;
+    }
+    #counter {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #333;
+    }
+    #seeMoreAds {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      display: none;
+    }
+    #seeMoreAds:hover {
+      background: #218838;
     }
   </style>
 </head>
@@ -76,7 +96,14 @@
   <div id="progressBar">0%</div>
 </div>
 
-<div id="reward" class="hidden">🎉 Parabéns! Você ganhou sua recompensa! 🎉</div>
+<div id="counter">Faltam 5 anúncios para sua recompensa!</div>
+
+<div id="reward">🎉 Parabéns! Você ganhou sua recompensa! 🎉</div>
+
+<button id="seeMoreAds" onclick="reloadAd()">Ver outro anúncio</button>
+
+<!-- Sons -->
+<audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
 
 <script>
   let clicks = [false, false, false, false, false];
@@ -90,7 +117,7 @@
 
     waiting = true;
     disableAds(true);
-    reloadAd(); // <- aqui recarrega o anúncio novo
+    reloadAd(); // <- recarrega novo anúncio
 
     document.getElementById('progressContainer').style.display = 'block';
     const progressBar = document.getElementById('progressBar');
@@ -110,7 +137,9 @@
         waiting = false;
         disableAds(false);
         document.getElementById('progressContainer').style.display = 'none';
+        updateCounter();
         checkReward();
+        playSuccess();
       }
     }, 1000);
   }
@@ -128,7 +157,8 @@
 
   function checkReward() {
     if (clicks.every(c => c)) {
-      document.getElementById('reward').classList.remove('hidden');
+      document.getElementById('reward').style.display = 'block';
+      document.getElementById('seeMoreAds').style.display = 'inline-block';
     }
   }
 
@@ -144,6 +174,21 @@
     const div = document.createElement('div');
     div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
     adContainer.appendChild(div);
+  }
+
+  function updateCounter() {
+    const remaining = clicks.filter(c => !c).length;
+    document.getElementById('counter').innerText = remaining > 0
+      ? `Faltam ${remaining} anúncio${remaining > 1 ? 's' : ''} para sua recompensa!`
+      : 'Todos os anúncios foram clicados!';
+  }
+
+  function playSuccess() {
+    const audio = document.getElementById('successSound');
+    audio.play();
+    if ("vibrate" in navigator) {
+      navigator.vibrate([300]);
+    }
   }
 
   // Carregar o primeiro anúncio ao abrir a página
