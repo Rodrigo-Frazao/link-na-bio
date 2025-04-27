@@ -148,8 +148,16 @@
       timerElement.textContent = tempoRestante;
 
       // Aqui você insere o código do anúncio dinamicamente
-      anuncioContainer.innerHTML = "<script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
-<div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>";
+      anuncioContainer.innerHTML = "<script type="text/javascript">
+	atOptions = {
+		'key' : 'd1b7ad64e08488116b4573d06e9029d7',
+		'format' : 'iframe',
+		'height' : 60,
+		'width' : 468,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>";
 
       const intervalo = setInterval(function() {
         tempoRestante--;
