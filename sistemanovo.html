@@ -17,7 +17,13 @@
       background: #fff;
       border-radius: 10px;
       max-width: 500px;
+      min-height: 150px;
       position: relative;
+    }
+    #loading {
+      display: none;
+      margin-top: 10px;
+      font-size: 16px;
     }
     #progressContainer {
       width: 80%;
@@ -32,9 +38,11 @@
       height: 100%;
       width: 0%;
       background-color: #28a745;
+      transition: width 0.2s linear;
       text-align: center;
       line-height: 20px;
       color: white;
+      font-size: 12px;
     }
     #continueBtn {
       margin-top: 20px;
@@ -71,6 +79,20 @@
       cursor: pointer;
       display: none;
     }
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #007bff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      margin-left: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
   </style>
 </head>
 
@@ -80,9 +102,9 @@
 
 <div id="adArea">
   <div class="ad-slot" id="adSlot">
-    <!-- SEU SCRIPT DE ANÚNCIO AQUI -->
-    <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
-    <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
+    <div id="loading">Carregando anúncio<span class="spinner"></span></div>
+    <!-- SCRIPT DO ANÚNCIO AQUI -->
+    <div id="adContainer"></div>
   </div>
 </div>
 
@@ -110,44 +132,81 @@
   let clicks = 0;
   let watching = false;
   let photosUnlocked = 0;
+  let clickedAd = false;
 
-  const adContainer = document.getElementById('container-31b4bfb4edaeaadcc9eb478eb68e654f');
+  const adContainer = document.getElementById('adContainer');
+  const loading = document.getElementById('loading');
+
+  loadAd();
+
+  function loadAd() {
+    loading.style.display = 'block';
+    adContainer.innerHTML = '';
+
+    // Recarrega seu script de anúncio
+    const script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
+    adContainer.appendChild(script);
+
+    const div = document.createElement('div');
+    div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
+    adContainer.appendChild(div);
+
+    setTimeout(() => {
+      loading.style.display = 'none';
+    }, 1500);
+
+    clickedAd = false;
+    watching = false;
+    document.getElementById('progressContainer').style.display = 'none';
+    document.getElementById('continueBtn').style.display = 'none';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('progressBar').innerText = '0%';
+  }
+
   adContainer.addEventListener('click', () => {
     if (watching) return;
+    clickedAd = true;
     startProgress();
   });
 
   function startProgress() {
+    if (!clickedAd) return;
     watching = true;
     document.getElementById('progressContainer').style.display = 'block';
     let progress = 0;
     const progressBar = document.getElementById('progressBar');
 
     const interval = setInterval(() => {
-      progress += 5;
+      if (!watching) {
+        clearInterval(interval);
+        return;
+      }
+      progress += 1;
       progressBar.style.width = progress + '%';
       progressBar.innerText = progress + '%';
       if (progress >= 100) {
         clearInterval(interval);
         document.getElementById('continueBtn').style.display = 'inline-block';
       }
-    }, 1000);
+    }, 200); // Progresso suave a cada 200ms
   }
 
   function finishAd() {
+    if (!clickedAd) return;
     clicks++;
     watching = false;
     document.getElementById('progressContainer').style.display = 'none';
     document.getElementById('continueBtn').style.display = 'none';
-    document.getElementById('progressBar').style.width = '0%';
-    document.getElementById('progressBar').innerText = '0%';
 
     updateCounter();
 
     if (clicks % 5 === 0) {
       unlockPhoto();
     } else {
-      reloadAd();
+      loadAd();
     }
   }
 
@@ -168,20 +227,8 @@
 
   function resetAds() {
     document.getElementById('seeMoreAds').style.display = 'none';
-    reloadAd();
+    loadAd();
     updateCounter();
-  }
-
-  function reloadAd() {
-    adContainer.innerHTML = '';
-    const script = document.createElement('script');
-    script.async = true;
-    script.setAttribute('data-cfasync', 'false');
-    script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
-    adContainer.appendChild(script);
-    const div = document.createElement('div');
-    div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
-    adContainer.appendChild(div);
   }
 </script>
 
