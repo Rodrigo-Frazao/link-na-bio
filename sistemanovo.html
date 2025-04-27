@@ -8,7 +8,7 @@
       font-family: Arial, sans-serif;
       background: #f0f2f5;
       text-align: center;
-      margin-top: 50px;
+      margin-top: 30px;
     }
     .ad {
       margin: 20px;
@@ -64,11 +64,80 @@
 
 <h1>Clique nos 5 anúncios e ganhe sua recompensa!</h1>
 
-<!-- Aqui aparece o novo banner de anúncio -->
+<!-- Novo anúncio aqui -->
 <div id="adBanner">
-  <script type="text/javascript">
-    atOptions = {
-      'key' : 'd1b7ad64e08488116b4573d06e9029d7',
-      'format' : 'iframe',
-      'height' : 60,
-      'width' : 468,
+  <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
+  <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
+</div>
+
+<div id="ads">
+  <div class="ad" onclick="clickAd(0)">Anúncio 1</div>
+  <div class="ad" onclick="clickAd(1)">Anúncio 2</div>
+  <div class="ad" onclick="clickAd(2)">Anúncio 3</div>
+  <div class="ad" onclick="clickAd(3)">Anúncio 4</div>
+  <div class="ad" onclick="clickAd(4)">Anúncio 5</div>
+</div>
+
+<div id="timer" class="hidden">Espere 15 segundos...</div>
+
+<div id="progressContainer">
+  <div id="progressBar">0%</div>
+</div>
+
+<div id="reward" class="hidden">🎉 Parabéns! Você ganhou sua recompensa! 🎉</div>
+
+<script>
+  let clicks = [false, false, false, false, false];
+  let waiting = false;
+
+  function clickAd(index) {
+    if (waiting || clicks[index]) {
+      alert('Você já clicou nesse anúncio ou está esperando!');
+      return;
+    }
+
+    waiting = true;
+    disableAds(true);
+    document.getElementById('progressContainer').style.display = 'block';
+    const progressBar = document.getElementById('progressBar');
+    let seconds = 15;
+    let width = 0;
+    progressBar.style.width = '0%';
+    progressBar.innerText = '0%';
+
+    const interval = setInterval(() => {
+      width += 100 / 15;
+      progressBar.style.width = width + '%';
+      progressBar.innerText = Math.round(width) + '%';
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        clicks[index] = true;
+        waiting = false;
+        disableAds(false);
+        document.getElementById('progressContainer').style.display = 'none';
+        checkReward();
+      }
+    }, 1000);
+  }
+
+  function disableAds(state) {
+    const ads = document.querySelectorAll('.ad');
+    ads.forEach(ad => {
+      if (state) {
+        ad.classList.add('disabled');
+      } else {
+        ad.classList.remove('disabled');
+      }
+    });
+  }
+
+  function checkReward() {
+    if (clicks.every(c => c)) {
+      document.getElementById('reward').classList.remove('hidden');
+    }
+  }
+</script>
+
+</body>
+</html>
