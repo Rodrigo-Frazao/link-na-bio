@@ -1,100 +1,138 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Sistema de Propagandas</title>
-	<style> 
-	
-	body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f0f0f0;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Recompensa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background-color: #f1f1f1;
+    }
 
-.container {
-    margin-top: 50px;
-}
+    h2 {
+      margin-bottom: 20px;
+    }
 
-.ad-btn {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
+    #propagandas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
 
-.hidden {
-    display: none;
-}
+    .propaganda {
+      width: 80%;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      text-align: center;
+    }
 
-#reward img {
-    margin-top: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
-}
-</style>
-    <link rel="stylesheet" href="styles.css">
+    #recompensa {
+      display: none;
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    #recompensa img {
+      width: 300px;
+      border-radius: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Assista/Clique em 5 Propagandas para Desbloquear sua Recompensa!</h1>
-        <p>Progresso: <span id="progress">0</span>/5</p>
 
-        <div id="ads">
-            <button class="ad-btn" onclick="watchAd(1)"><script type="text/javascript">
-	atOptions = {
-		'key' : 'd1b7ad64e08488116b4573d06e9029d7',
-		'format' : 'iframe',
-		'height' : 60,
-		'width' : 468,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script></button>
-            <button class="ad-btn" onclick="watchAd(2)"><script type='text/javascript' src='//impetusorgansseparation.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js'></script></button>
-            <button class="ad-btn" onclick="watchAd(3)"><script type='text/javascript' src='//impetusorgansseparation.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js'></script>/button>
-            <button class="ad-btn" onclick="watchAd(4)"><script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
-<div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div></button>
-            <button class="ad-btn" onclick="watchAd(5)"><script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
-<div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div></button>
-        </div>
+  <h2>Assista a 5 propagandas para liberar sua recompensa!</h2>
 
-        <div id="reward" class="hidden">
-            <h2>Recompensa Desbloqueada!</h2>
-            <img src="sua-foto.jpg" alt="Recompensa" width="300">
-        </div>
-    </div>
+  <!-- Lista de propagandas -->
+  <div id="propagandas">
+    <div class="propaganda">Propaganda 1</div>
+    <div class="propaganda">Propaganda 2</div>
+    <div class="propaganda">Propaganda 3</div>
+    <div class="propaganda">Propaganda 4</div>
+    <div class="propaganda">Propaganda 5</div>
+  </div>
 
-    <script src="script.js">let adsWatched = 0;
-const totalAds = 5;
-const progressElement = document.getElementById('progress');
-const rewardElement = document.getElementById('reward');
+  <!-- Contador de Propagandas -->
+  <p>Você assistiu <span id="contador">0</span> propagandas.</p>
 
-function watchAd(adNumber) {
-    const button = document.querySelector(`.ad-btn:nth-child(${adNumber})`);
-    
-    // Verifica se a propaganda já foi assistida
-    if (button.disabled) {
-        alert('Você já assistiu essa propaganda!');
-        return;
+  <!-- Botão para marcar a propaganda assistida -->
+  <button id="assistir" class="disabled" disabled>Assistir Propaganda</button>
+
+  <!-- Recompensa -->
+  <div id="recompensa">
+    <h3>Parabéns! Você liberou sua recompensa! 🎉</h3>
+    <img src="sua_foto.jpg" alt="Foto" />
+  </div>
+
+  <script>
+    let contador = 0;
+    const maxPropagandas = 5;
+
+    const contadorElement = document.getElementById('contador');
+    const recompensaElement = document.getElementById('recompensa');
+    const assistirButton = document.getElementById('assistir');
+    const propagandas = document.querySelectorAll('.propaganda');
+
+    // Função que ativa o botão de "assistir"
+    function ativarBotao() {
+      assistirButton.classList.remove('disabled');
+      assistirButton.disabled = false;
     }
 
-    // Simulação de assistir/clicar em propaganda
-    alert(`Assistindo Propaganda ${adNumber}...`);
+    // Função para marcar a propaganda como assistida
+    function assistirPropaganda() {
+      contador++;
 
-    adsWatched++;
-    button.disabled = true;
-    button.innerText = `Propaganda ${adNumber} (Assistida)`;
-    progressElement.innerText = adsWatched;
+      // Atualiza o contador de propagandas assistidas
+      contadorElement.textContent = contador;
 
-    // Verifica se todas as propagandas foram assistidas
-    if (adsWatched === totalAds) {
-        desbloquearRecompensa();
+      // Quando o limite de propagandas for atingido, libera a recompensa
+      if (contador >= maxPropagandas) {
+        recompensaElement.style.display = 'block';
+        assistirButton.classList.add('disabled');
+        assistirButton.disabled = true;
+      }
     }
-}
 
-function desbloquearRecompensa() {
-    document.getElementById('ads').classList.add('hidden');
-    rewardElement.classList.remove('hidden');
-}</script>
+    // Adiciona evento de clique para cada propaganda
+    propagandas.forEach(propaganda => {
+      propaganda.addEventListener('click', assistirPropaganda);
+    });
+
+    // Ativa o botão de assistir quando o usuário interage com as propagandas
+    ativarBotao();
+  </script>
+
 </body>
 </html>
