@@ -8,76 +8,89 @@
       font-family: Arial, sans-serif;
       background: #f0f2f5;
       text-align: center;
-      margin-top: 30px;
-    }
-    .ad {
-      margin: 20px;
       padding: 20px;
-      border: 2px solid #007bff;
-      background: #ffffff;
+    }
+    .ad-slot {
+      margin: 20px auto;
+      padding: 20px;
+      border: 2px dashed #007bff;
+      background: #fff;
       border-radius: 10px;
-      font-size: 18px;
-      color: #007bff;
-      cursor: pointer;
-      transition: 0.3s;
-      max-width: 300px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 500px;
+      position: relative;
     }
-    .ad.disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-    .ad.completed {
-      background-color: #28a745;
-      color: white;
-      border-color: #28a745;
-    }
-    #counter {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #333;
-    }
-    #reward {
-      font-size: 24px;
-      color: #28a745;
-      margin-top: 30px;
-    }
-    .photo {
-      margin: 10px;
+    #progressContainer {
+      width: 80%;
+      height: 20px;
+      background-color: #ddd;
+      margin: 20px auto;
+      border-radius: 10px;
+      overflow: hidden;
       display: none;
-      max-width: 90%;
-      height: auto;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
-    #seeMoreAds {
+    #progressBar {
+      height: 100%;
+      width: 0%;
+      background-color: #28a745;
+      text-align: center;
+      line-height: 20px;
+      color: white;
+    }
+    #continueBtn {
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 18px;
       background: #28a745;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
       display: none;
     }
-    #seeMoreAds:hover {
-      background: #218838;
+    #counter {
+      margin: 20px 0;
+      font-size: 20px;
+      color: #333;
+    }
+    .photo {
+      display: none;
+      margin: 10px auto;
+      width: 90%;
+      max-width: 300px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    }
+    #seeMoreAds {
+      margin-top: 30px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: none;
     }
   </style>
 </head>
+
 <body>
 
-<h1>Clique nos 5 anúncios e ganhe sua recompensa!</h1>
+<h1>Assista aos Anúncios e Ganhe suas Fotos!</h1>
 
-<div id="ads">
-  <div class="ad" onclick="clickAd(0)">Anúncio 1</div>
-  <div class="ad" onclick="clickAd(1)">Anúncio 2</div>
-  <div class="ad" onclick="clickAd(2)">Anúncio 3</div>
-  <div class="ad" onclick="clickAd(3)">Anúncio 4</div>
-  <div class="ad" onclick="clickAd(4)">Anúncio 5</div>
+<div id="adArea">
+  <div class="ad-slot" id="adSlot">
+    <!-- SEU SCRIPT DE ANÚNCIO AQUI -->
+    <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
+    <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
+  </div>
 </div>
+
+<div id="progressContainer">
+  <div id="progressBar">0%</div>
+</div>
+
+<button id="continueBtn" onclick="finishAd()">Continuar</button>
 
 <div id="counter">Faltam 5 anúncios para liberar a primeira foto!</div>
 
@@ -89,129 +102,87 @@
   <img id="photo5" class="photo" src="https://via.placeholder.com/300x400?text=Foto+5" alt="Foto 5">
 </div>
 
-<button id="seeMoreAds" onclick="seeMore()">Ver mais anúncios para liberar fotos</button>
+<button id="seeMoreAds" onclick="resetAds()">Ver mais anúncios</button>
 
 <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
 
 <script>
-  let clicks = [false, false, false, false, false];
-  let waiting = false;
-  let adsWatched = 0;
-  let photoUnlocked = 0;
+  let clicks = 0;
+  let watching = false;
+  let photosUnlocked = 0;
 
-  function clickAd(index) {
-    if (waiting || clicks[index]) {
-      alert('Você já clicou nesse anúncio ou está esperando!');
-      return;
-    }
+  const adContainer = document.getElementById('container-31b4bfb4edaeaadcc9eb478eb68e654f');
+  adContainer.addEventListener('click', () => {
+    if (watching) return;
+    startProgress();
+  });
 
-    waiting = true;
-    openAdPopup(index, false);
+  function startProgress() {
+    watching = true;
+    document.getElementById('progressContainer').style.display = 'block';
+    let progress = 0;
+    const progressBar = document.getElementById('progressBar');
+
+    const interval = setInterval(() => {
+      progress += 5;
+      progressBar.style.width = progress + '%';
+      progressBar.innerText = progress + '%';
+      if (progress >= 100) {
+        clearInterval(interval);
+        document.getElementById('continueBtn').style.display = 'inline-block';
+      }
+    }, 1000);
   }
 
-  function openAdPopup(index, isExtra) {
-    const popup = window.open("", "popup", "width=500,height=600");
-    popup.document.write(`
-      <html lang="pt-BR">
-      <head>
-        <title>Assistindo Anúncio...</title>
-        <style>
-          body { font-family: Arial, sans-serif; text-align: center; margin-top: 20px; }
-          #progressContainer { width: 80%; background-color: #ddd; margin: 20px auto; border-radius: 10px; overflow: hidden; }
-          #progressBar { height: 20px; width: 0%; background-color: #28a745; text-align: center; line-height: 20px; color: white; }
-          #continueBtn { margin-top: 20px; display: none; padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; }
-        </style>
-      </head>
-      <body>
-        <h2>Assistindo Anúncio...</h2>
+  function finishAd() {
+    clicks++;
+    watching = false;
+    document.getElementById('progressContainer').style.display = 'none';
+    document.getElementById('continueBtn').style.display = 'none';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('progressBar').innerText = '0%';
 
-        <div id="adContainer">
-          <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
-          <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
-        </div>
-
-        <div id="progressContainer">
-          <div id="progressBar">0%</div>
-        </div>
-        <button id="continueBtn" onclick="finish()">Continuar</button>
-
-        <script>
-          let adClicked = false;
-          document.getElementById('container-31b4bfb4edaeaadcc9eb478eb68e654f').addEventListener('click', function() {
-            if (!adClicked) {
-              adClicked = true;
-              startProgress();
-            }
-          });
-
-          function startProgress() {
-            var progressBar = document.getElementById('progressBar');
-            let width = 0;
-            const interval = setInterval(() => {
-              if (!adClicked) return;
-              width += 100/20;
-              progressBar.style.width = width + '%';
-              progressBar.innerText = Math.round(width) + '%';
-              if (width >= 100) {
-                clearInterval(interval);
-                document.getElementById('continueBtn').style.display = 'inline-block';
-              }
-            }, 1000);
-          }
-
-          function finish() {
-            window.opener.finishAd(${index}, ${isExtra});
-            window.close();
-          }
-        <\/script>
-      </body>
-      </html>
-    `);
-  }
-
-  function finishAd(index, isExtra) {
-    waiting = false;
-    if (!isExtra) {
-      clicks[index] = true;
-      document.querySelectorAll('.ad')[index].classList.add('completed');
-    }
-    adsWatched++;
     updateCounter();
 
-    if (adsWatched % 5 === 0 && photoUnlocked < 5) {
-      photoUnlocked++;
-      document.getElementById('photo' + photoUnlocked).style.display = 'block';
-      document.getElementById('seeMoreAds').style.display = 'inline-block';
-      playSuccess();
+    if (clicks % 5 === 0) {
+      unlockPhoto();
+    } else {
+      reloadAd();
     }
   }
 
   function updateCounter() {
-    const remaining = 5 - (adsWatched % 5);
+    const remaining = 5 - (clicks % 5);
     document.getElementById('counter').innerText = `Faltam ${remaining} anúncios para liberar a próxima foto!`;
   }
 
-  function seeMore() {
-    if (waiting) return;
-    adsWatched = adsWatched - (adsWatched % 5); // Corrige o contador
-    for (let i = 0; i < 5; i++) {
-      document.querySelectorAll('.ad')[i].classList.remove('completed');
-      clicks[i] = false;
+  function unlockPhoto() {
+    photosUnlocked++;
+    if (photosUnlocked <= 5) {
+      document.getElementById('photo' + photosUnlocked).style.display = 'block';
     }
+    document.getElementById('seeMoreAds').style.display = 'inline-block';
+    document.getElementById('counter').innerText = 'Foto liberada! Clique para ver mais anúncios.';
+    document.getElementById('successSound').play();
+  }
+
+  function resetAds() {
+    document.getElementById('seeMoreAds').style.display = 'none';
+    reloadAd();
     updateCounter();
   }
 
-  function playSuccess() {
-    const audio = document.getElementById('successSound');
-    audio.play();
-    if ("vibrate" in navigator) {
-      navigator.vibrate([300]);
-    }
+  function reloadAd() {
+    adContainer.innerHTML = '';
+    const script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
+    adContainer.appendChild(script);
+    const div = document.createElement('div');
+    div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
+    adContainer.appendChild(div);
   }
-
-  window.onload = () => {
-    updateCounter();
-  };
 </script>
 
 </body>
