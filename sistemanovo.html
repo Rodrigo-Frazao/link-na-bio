@@ -6,15 +6,16 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f0f2f5;
+      background: #2c3e50;
       text-align: center;
       padding: 20px;
+      color: white;
     }
     .ad-slot {
       margin: 20px auto;
       padding: 20px;
-      border: 2px dashed #007bff;
-      background: #fff;
+      border: 2px dashed #00ffcc;
+      background: #34495e;
       border-radius: 10px;
       max-width: 500px;
       min-height: 150px;
@@ -24,11 +25,12 @@
       display: none;
       margin-top: 10px;
       font-size: 16px;
+      color: #00ffcc;
     }
     #progressContainer {
       width: 80%;
       height: 20px;
-      background-color: #ddd;
+      background-color: #95a5a6;
       margin: 20px auto;
       border-radius: 10px;
       overflow: hidden;
@@ -58,7 +60,7 @@
     #counter {
       margin: 20px 0;
       font-size: 20px;
-      color: #333;
+      color: #fff;
     }
     .photo {
       display: none;
@@ -78,6 +80,10 @@
       border-radius: 8px;
       cursor: pointer;
       display: none;
+      transition: background 0.3s ease;
+    }
+    #seeMoreAds:hover {
+      background: #0056b3;
     }
     .spinner {
       border: 4px solid #f3f3f3;
@@ -92,6 +98,23 @@
     @keyframes spin {
       0% { transform: rotate(0deg);}
       100% { transform: rotate(360deg);}
+    }
+    .neon-button {
+      background: #00ffcc;
+      color: black;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      padding: 15px 30px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+      transition: 0.3s;
+    }
+    .neon-button:hover {
+      box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc;
+      background: #009966;
     }
   </style>
 </head>
@@ -112,7 +135,7 @@
   <div id="progressBar">0%</div>
 </div>
 
-<button id="continueBtn" onclick="finishAd()">Continuar</button>
+<button id="continueBtn" class="neon-button" onclick="finishAd()">Continuar</button>
 
 <div id="counter">Faltam 5 anúncios para liberar a primeira foto!</div>
 
@@ -124,7 +147,7 @@
   <img id="photo5" class="photo" src="https://via.placeholder.com/300x400?text=Foto+5" alt="Foto 5">
 </div>
 
-<button id="seeMoreAds" onclick="resetAds()">Ver mais anúncios</button>
+<button id="seeMoreAds" class="neon-button" onclick="resetAds()">Ver mais anúncios</button>
 
 <audio id="successSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
 
@@ -133,9 +156,14 @@
   let watching = false;
   let photosUnlocked = 0;
   let clickedAd = false;
+  let counterTimer;
 
   const adContainer = document.getElementById('adContainer');
   const loading = document.getElementById('loading');
+  const progressContainer = document.getElementById('progressContainer');
+  const progressBar = document.getElementById('progressBar');
+  const continueBtn = document.getElementById('continueBtn');
+  const counter = document.getElementById('counter');
 
   loadAd();
 
@@ -161,9 +189,9 @@
     clickedAd = false;
     watching = false;
     document.getElementById('progressContainer').style.display = 'none';
-    document.getElementById('continueBtn').style.display = 'none';
-    document.getElementById('progressBar').style.width = '0%';
-    document.getElementById('progressBar').innerText = '0%';
+    continueBtn.style.display = 'none';
+    progressBar.style.width = '0%';
+    progressBar.innerText = '0%';
   }
 
   adContainer.addEventListener('click', () => {
@@ -177,19 +205,17 @@
     watching = true;
     document.getElementById('progressContainer').style.display = 'block';
     let progress = 0;
-    const progressBar = document.getElementById('progressBar');
-
-    const interval = setInterval(() => {
+    counterTimer = setInterval(() => {
       if (!watching) {
-        clearInterval(interval);
+        clearInterval(counterTimer);
         return;
       }
       progress += 1;
       progressBar.style.width = progress + '%';
       progressBar.innerText = progress + '%';
       if (progress >= 100) {
-        clearInterval(interval);
-        document.getElementById('continueBtn').style.display = 'inline-block';
+        clearInterval(counterTimer);
+        continueBtn.style.display = 'inline-block';
       }
     }, 200); // Progresso suave a cada 200ms
   }
@@ -199,7 +225,7 @@
     clicks++;
     watching = false;
     document.getElementById('progressContainer').style.display = 'none';
-    document.getElementById('continueBtn').style.display = 'none';
+    continueBtn.style.display = 'none';
 
     updateCounter();
 
@@ -212,7 +238,7 @@
 
   function updateCounter() {
     const remaining = 5 - (clicks % 5);
-    document.getElementById('counter').innerText = `Faltam ${remaining} anúncios para liberar a próxima foto!`;
+    counter.innerText = `Faltam ${remaining} anúncios para liberar a próxima foto!`;
   }
 
   function unlockPhoto() {
@@ -221,7 +247,7 @@
       document.getElementById('photo' + photosUnlocked).style.display = 'block';
     }
     document.getElementById('seeMoreAds').style.display = 'inline-block';
-    document.getElementById('counter').innerText = 'Foto liberada! Clique para ver mais anúncios.';
+    counter.innerText = 'Foto liberada! Clique para ver mais anúncios.';
     document.getElementById('successSound').play();
   }
 
