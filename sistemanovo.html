@@ -36,6 +36,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
       text-align: center;
+      cursor: pointer;
     }
 
     #recompensa {
@@ -47,6 +48,33 @@
     #recompensa img {
       width: 300px;
       border-radius: 10px;
+    }
+
+    #popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    #popup div {
+      background-color: #333;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .popup-timer {
+      margin-top: 20px;
+      font-size: 24px;
     }
 
     button {
@@ -86,13 +114,18 @@
   <!-- Contador de Propagandas -->
   <p>Você assistiu <span id="contador">0</span> propagandas.</p>
 
-  <!-- Botão para marcar a propaganda assistida -->
-  <button id="assistir" class="disabled" disabled>Assistir Propaganda</button>
-
   <!-- Recompensa -->
   <div id="recompensa">
     <h3>Parabéns! Você liberou sua recompensa! 🎉</h3>
     <img src="sua_foto.jpg" alt="Foto" />
+  </div>
+
+  <!-- Tela pop-up de propaganda com contador -->
+  <div id="popup">
+    <div>
+      <h3>Assistindo Propaganda...</h3>
+      <p>Tempo restante: <span id="timer">30</span> segundos</p>
+    </div>
   </div>
 
   <script>
@@ -101,37 +134,44 @@
 
     const contadorElement = document.getElementById('contador');
     const recompensaElement = document.getElementById('recompensa');
-    const assistirButton = document.getElementById('assistir');
+    const popupElement = document.getElementById('popup');
+    const timerElement = document.getElementById('timer');
     const propagandas = document.querySelectorAll('.propaganda');
 
-    // Função que ativa o botão de "assistir"
-    function ativarBotao() {
-      assistirButton.classList.remove('disabled');
-      assistirButton.disabled = false;
+    // Função para exibir a tela da propaganda
+    function exibirPopup() {
+      popupElement.style.display = 'flex';
+      let tempoRestante = 30;
+      timerElement.textContent = tempoRestante;
+
+      const intervalo = setInterval(function() {
+        tempoRestante--;
+        timerElement.textContent = tempoRestante;
+        if (tempoRestante <= 0) {
+          clearInterval(intervalo);
+          popupElement.style.display = 'none';
+          assistirPropaganda();
+        }
+      }, 1000);
     }
 
     // Função para marcar a propaganda como assistida
     function assistirPropaganda() {
       contador++;
-
-      // Atualiza o contador de propagandas assistidas
       contadorElement.textContent = contador;
 
       // Quando o limite de propagandas for atingido, libera a recompensa
       if (contador >= maxPropagandas) {
         recompensaElement.style.display = 'block';
-        assistirButton.classList.add('disabled');
-        assistirButton.disabled = true;
       }
     }
 
     // Adiciona evento de clique para cada propaganda
     propagandas.forEach(propaganda => {
-      propaganda.addEventListener('click', assistirPropaganda);
+      propaganda.addEventListener('click', function() {
+        exibirPopup();
+      });
     });
-
-    // Ativa o botão de assistir quando o usuário interage com as propagandas
-    ativarBotao();
   </script>
 
 </body>
