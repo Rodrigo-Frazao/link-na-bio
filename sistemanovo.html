@@ -28,36 +28,21 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
-    #progressContainer {
-      width: 80%;
-      background-color: #ddd;
-      margin: 20px auto;
-      border-radius: 10px;
-      overflow: hidden;
-      display: none;
-    }
-    #progressBar {
-      height: 20px;
-      width: 0%;
+    .ad.completed {
       background-color: #28a745;
-      text-align: center;
-      line-height: 20px;
       color: white;
+      border-color: #28a745;
+    }
+    #counter {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #333;
     }
     #reward {
       font-size: 28px;
       color: green;
       margin-top: 40px;
       display: none;
-    }
-    #adBanner {
-      margin: 30px auto;
-      max-width: 468px;
-    }
-    #counter {
-      margin-top: 20px;
-      font-size: 20px;
-      color: #333;
     }
     #seeMoreAds {
       margin-top: 20px;
@@ -79,21 +64,12 @@
 
 <h1>Clique nos 5 anúncios e ganhe sua recompensa!</h1>
 
-<!-- Banner de Anúncio -->
-<div id="adBanner">
-  <div id="adContainer"></div>
-</div>
-
 <div id="ads">
   <div class="ad" onclick="clickAd(0)">Anúncio 1</div>
   <div class="ad" onclick="clickAd(1)">Anúncio 2</div>
   <div class="ad" onclick="clickAd(2)">Anúncio 3</div>
   <div class="ad" onclick="clickAd(3)">Anúncio 4</div>
   <div class="ad" onclick="clickAd(4)">Anúncio 5</div>
-</div>
-
-<div id="progressContainer">
-  <div id="progressBar">0%</div>
 </div>
 
 <div id="counter">Faltam 5 anúncios para sua recompensa!</div>
@@ -116,64 +92,74 @@
     }
 
     waiting = true;
-    disableAds(true);
-    reloadAd(); // <- recarrega novo anúncio
-
-    document.getElementById('progressContainer').style.display = 'block';
-    const progressBar = document.getElementById('progressBar');
-    let seconds = 15;
-    let width = 0;
-    progressBar.style.width = '0%';
-    progressBar.innerText = '0%';
-
-    const interval = setInterval(() => {
-      width += 100 / 15;
-      progressBar.style.width = width + '%';
-      progressBar.innerText = Math.round(width) + '%';
-      seconds--;
-      if (seconds <= 0) {
-        clearInterval(interval);
-        clicks[index] = true;
-        waiting = false;
-        disableAds(false);
-        document.getElementById('progressContainer').style.display = 'none';
-        updateCounter();
-        checkReward();
-        playSuccess();
-      }
-    }, 1000);
+    openAdPopup(index);
   }
 
-  function disableAds(state) {
+  function openAdPopup(index) {
+    const popup = window.open("", "popup", "width=500,height=600");
+    popup.document.write(`
+      <html lang="pt-BR">
+      <head>
+        <title>Assistindo Anúncio...</title>
+        <style>
+          body { font-family: Arial, sans-serif; text-align: center; margin-top: 20px; }
+          #progressContainer { width: 80%; background-color: #ddd; margin: 20px auto; border-radius: 10px; overflow: hidden; }
+          #progressBar { height: 20px; width: 0%; background-color: #28a745; text-align: center; line-height: 20px; color: white; }
+          #adContainer { margin-top: 20px; }
+        </style>
+      </head>
+      <body>
+        <h2>Assistindo Anúncio...</h2>
+        <div id="adContainer"></div>
+        <div id="progressContainer">
+          <div id="progressBar">0%</div>
+        </div>
+
+        <script>
+          function loadAd() {
+            var adDiv = document.getElementById('adContainer');
+            var script = document.createElement('script');
+            script.async = true;
+            script.dataset.cfasync = "false";
+            script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
+            adDiv.appendChild(script);
+
+            var div = document.createElement('div');
+            div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
+            adDiv.appendChild(div);
+          }
+
+          function startProgress() {
+            var progressBar = document.getElementById('progressBar');
+            let width = 0;
+            const interval = setInterval(() => {
+              width += 100/15;
+              progressBar.style.width = width + '%';
+              progressBar.innerText = Math.round(width) + '%';
+              if (width >= 100) {
+                clearInterval(interval);
+                window.opener.finishAd(${index});
+                window.close();
+              }
+            }, 1000);
+          }
+
+          loadAd();
+          startProgress();
+        <\/script>
+      </body>
+      </html>
+    `);
+  }
+
+  function finishAd(index) {
+    clicks[index] = true;
+    waiting = false;
     const ads = document.querySelectorAll('.ad');
-    ads.forEach(ad => {
-      if (state) {
-        ad.classList.add('disabled');
-      } else {
-        ad.classList.remove('disabled');
-      }
-    });
-  }
-
-  function checkReward() {
-    if (clicks.every(c => c)) {
-      document.getElementById('reward').style.display = 'block';
-      document.getElementById('seeMoreAds').style.display = 'inline-block';
-    }
-  }
-
-  function reloadAd() {
-    const adContainer = document.getElementById('adContainer');
-    adContainer.innerHTML = ''; // limpar
-    const script = document.createElement('script');
-    script.async = true;
-    script.dataset.cfasync = "false";
-    script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
-    adContainer.appendChild(script);
-
-    const div = document.createElement('div');
-    div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
-    adContainer.appendChild(div);
+    ads[index].classList.add('completed');
+    updateCounter();
+    checkReward();
+    playSuccess();
   }
 
   function updateCounter() {
@@ -181,6 +167,13 @@
     document.getElementById('counter').innerText = remaining > 0
       ? `Faltam ${remaining} anúncio${remaining > 1 ? 's' : ''} para sua recompensa!`
       : 'Todos os anúncios foram clicados!';
+  }
+
+  function checkReward() {
+    if (clicks.every(c => c)) {
+      document.getElementById('reward').style.display = 'block';
+      document.getElementById('seeMoreAds').style.display = 'inline-block';
+    }
   }
 
   function playSuccess() {
@@ -191,8 +184,13 @@
     }
   }
 
-  // Carregar o primeiro anúncio ao abrir a página
-  window.onload = reloadAd;
+  function reloadAd() {
+    window.location.reload();
+  }
+
+  window.onload = () => {
+    updateCounter();
+  };
 </script>
 
 </body>
