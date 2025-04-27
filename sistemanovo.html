@@ -28,11 +28,6 @@
       opacity: 0.5;
       cursor: not-allowed;
     }
-    #timer {
-      margin-top: 30px;
-      font-size: 20px;
-      color: #333;
-    }
     #progressContainer {
       width: 80%;
       background-color: #ddd;
@@ -64,10 +59,9 @@
 
 <h1>Clique nos 5 anúncios e ganhe sua recompensa!</h1>
 
-<!-- Novo anúncio aqui -->
+<!-- Banner de Anúncio -->
 <div id="adBanner">
-  <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
-  <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
+  <div id="adContainer"></div>
 </div>
 
 <div id="ads">
@@ -77,8 +71,6 @@
   <div class="ad" onclick="clickAd(3)">Anúncio 4</div>
   <div class="ad" onclick="clickAd(4)">Anúncio 5</div>
 </div>
-
-<div id="timer" class="hidden">Espere 15 segundos...</div>
 
 <div id="progressContainer">
   <div id="progressBar">0%</div>
@@ -98,6 +90,8 @@
 
     waiting = true;
     disableAds(true);
+    reloadAd(); // <- aqui recarrega o anúncio novo
+
     document.getElementById('progressContainer').style.display = 'block';
     const progressBar = document.getElementById('progressBar');
     let seconds = 15;
@@ -137,6 +131,23 @@
       document.getElementById('reward').classList.remove('hidden');
     }
   }
+
+  function reloadAd() {
+    const adContainer = document.getElementById('adContainer');
+    adContainer.innerHTML = ''; // limpar
+    const script = document.createElement('script');
+    script.async = true;
+    script.dataset.cfasync = "false";
+    script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
+    adContainer.appendChild(script);
+
+    const div = document.createElement('div');
+    div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
+    adContainer.appendChild(div);
+  }
+
+  // Carregar o primeiro anúncio ao abrir a página
+  window.onload = reloadAd;
 </script>
 
 </body>
