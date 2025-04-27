@@ -124,6 +124,7 @@
   <div id="popup">
     <div>
       <h3>Assistindo Propaganda...</h3>
+      <div id="anuncio-container">Carregando anúncio...</div> <!-- Aqui será injetado o código do anúncio -->
       <p>Tempo restante: <span id="timer">30</span> segundos</p>
     </div>
   </div>
@@ -136,6 +137,7 @@
     const recompensaElement = document.getElementById('recompensa');
     const popupElement = document.getElementById('popup');
     const timerElement = document.getElementById('timer');
+    const anuncioContainer = document.getElementById('anuncio-container');
     const propagandas = document.querySelectorAll('.propaganda');
 
     // Função para exibir a tela da propaganda
@@ -143,6 +145,9 @@
       popupElement.style.display = 'flex';
       let tempoRestante = 30;
       timerElement.textContent = tempoRestante;
+
+      // Aqui você insere o código do anúncio dinamicamente
+      anuncioContainer.innerHTML = "<script type='text/javascript' src='//impetusorgansseparation.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js'></script>";
 
       const intervalo = setInterval(function() {
         tempoRestante--;
