@@ -119,15 +119,17 @@
           body { font-family: Arial, sans-serif; text-align: center; margin-top: 20px; }
           #progressContainer { width: 80%; background-color: #ddd; margin: 20px auto; border-radius: 10px; overflow: hidden; }
           #progressBar { height: 20px; width: 0%; background-color: #28a745; text-align: center; line-height: 20px; color: white; }
-          #adLink { margin-top: 20px; font-size: 18px; color: #007bff; text-decoration: underline; cursor: pointer; }
           #continueBtn { margin-top: 20px; display: none; padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; }
         </style>
       </head>
       <body>
         <h2>Assistindo Anúncio...</h2>
+
         <div id="adContainer">
-          <div id="adLink" onclick="openRealAd()">Clique aqui para abrir o anúncio</div>
+          <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
+          <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
         </div>
+
         <div id="progressContainer">
           <div id="progressBar">0%</div>
         </div>
@@ -135,12 +137,12 @@
 
         <script>
           let adClicked = false;
-          function openRealAd() {
-            window.open('https://google.com', '_blank'); // <=== Trocar para o seu link se quiser
-            adClicked = true;
-            startProgress();
-            document.getElementById('adLink').style.display = 'none';
-          }
+          document.getElementById('container-31b4bfb4edaeaadcc9eb478eb68e654f').addEventListener('click', function() {
+            if (!adClicked) {
+              adClicked = true;
+              startProgress();
+            }
+          });
 
           function startProgress() {
             var progressBar = document.getElementById('progressBar');
