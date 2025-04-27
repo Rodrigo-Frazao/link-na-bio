@@ -1,183 +1,136 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Recompensa</title>
+  <title>Ganhe sua Recompensa!</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-color: #f1f1f1;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    #propagandas {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      margin-top: 30px;
-    }
-
-    .propaganda {
-      width: 80%;
-      padding: 10px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      background: #f0f2f5;
       text-align: center;
-      cursor: pointer;
+      margin-top: 50px;
     }
-
-    #recompensa {
-      display: none;
-      margin-top: 30px;
-      text-align: center;
-    }
-
-    #recompensa img {
-      width: 300px;
-      border-radius: 10px;
-    }
-
-    #popup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      color: white;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    #popup div {
-      background-color: #333;
+    .ad {
+      margin: 20px;
       padding: 20px;
+      border: 2px solid #007bff;
+      background: #ffffff;
       border-radius: 10px;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-
-    .popup-timer {
-      margin-top: 20px;
-      font-size: 24px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
+      font-size: 18px;
+      color: #007bff;
       cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s;
+      transition: 0.3s;
+      max-width: 300px;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    .disabled {
-      background-color: #ccc;
+    .ad.disabled {
+      opacity: 0.5;
       cursor: not-allowed;
+    }
+    #timer {
+      margin-top: 30px;
+      font-size: 20px;
+      color: #333;
+    }
+    #progressContainer {
+      width: 80%;
+      background-color: #ddd;
+      margin: 20px auto;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+    }
+    #progressBar {
+      height: 20px;
+      width: 0%;
+      background-color: #28a745;
+      text-align: center;
+      line-height: 20px;
+      color: white;
+    }
+    #reward {
+      font-size: 28px;
+      color: green;
+      margin-top: 40px;
     }
   </style>
 </head>
 <body>
 
-  <h2>Assista a 5 propagandas para liberar sua recompensa!</h2>
+<h1>Clique nos 5 anúncios e ganhe sua recompensa!</h1>
 
-  <!-- Lista de propagandas -->
-  <div id="propagandas">
-    <div class="propaganda">Clique para assistir à propaganda 1</div>
-    <div class="propaganda">Clique para assistir à propaganda 2</div>
-    <div class="propaganda">Clique para assistir à propaganda 3</div>
-    <div class="propaganda">Clique para assistir à propaganda 4</div>
-    <div class="propaganda">Clique para assistir à propaganda 5</div>
-  </div>
+<div id="ads">
+  <div class="ad" onclick="clickAd(0)">Anúncio 1</div>
+  <div class="ad" onclick="clickAd(1)">Anúncio 2</div>
+  <div class="ad" onclick="clickAd(2)">Anúncio 3</div>
+  <div class="ad" onclick="clickAd(3)">Anúncio 4</div>
+  <div class="ad" onclick="clickAd(4)">Anúncio 5</div>
+</div>
 
-  <!-- Contador de Propagandas -->
-  <p>Você assistiu <span id="contador">0</span> propagandas.</p>
+<div id="timer" class="hidden">Espere 15 segundos...</div>
 
-  <!-- Recompensa -->
-  <div id="recompensa">
-    <h3>Parabéns! Você liberou sua recompensa! 🎉</h3>
-    <img src="sua_foto.jpg" alt="Foto" />
-  </div>
+<div id="progressContainer">
+  <div id="progressBar">0%</div>
+</div>
 
-  <!-- Tela pop-up de propaganda com contador -->
-  <div id="popup">
-    <div>
-      <h3>Assistindo Propaganda...</h3>
-      <div id="anuncio-container">Carregando anúncio...<script type='text/javascript' src='//impetusorgansseparation.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js'></script></div><!-- Aqui será injetado o código do anúncio -->
-      <p>Tempo restante: <span id="timer">30</span> segundos</p>
-    </div>
-  </div>
+<div id="reward" class="hidden">🎉 Parabéns! Você ganhou sua recompensa! 🎉</div>
 
-  <script>
-    let contador = 0;
-    const maxPropagandas = 5;
+<!-- Seu script de anúncio -->
+<script type='text/javascript' src='//impetusorgansseparation.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js'></script>
 
-    const contadorElement = document.getElementById('contador');
-    const recompensaElement = document.getElementById('recompensa');
-    const popupElement = document.getElementById('popup');
-    const timerElement = document.getElementById('timer');
-    const anuncioContainer = document.getElementById('anuncio-container');
-    const propagandas = document.querySelectorAll('.propaganda');
+<script>
+  let clicks = [false, false, false, false, false];
+  let waiting = false;
 
-    // Função para exibir a tela da propaganda
-    function exibirPopup() {
-      popupElement.style.display = 'flex';
-      let tempoRestante = 30;
-      timerElement.textContent = tempoRestante;
-
-      // Aqui você insere o código do anúncio dinamicamente
-      anuncioContainer.innerHTML = "<script type='text/javascript' src='//impetusorgansseparation.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js'></script>";
-
-      const intervalo = setInterval(function() {
-        tempoRestante--;
-        timerElement.textContent = tempoRestante;
-        if (tempoRestante <= 0) {
-          clearInterval(intervalo);
-          popupElement.style.display = 'none';
-          assistirPropaganda();
-        }
-      }, 1000);
+  function clickAd(index) {
+    if (waiting || clicks[index]) {
+      alert('Você já clicou nesse anúncio ou está esperando!');
+      return;
     }
 
-    // Função para marcar a propaganda como assistida
-    function assistirPropaganda() {
-      contador++;
-      contadorElement.textContent = contador;
+    waiting = true;
+    disableAds(true);
+    document.getElementById('progressContainer').style.display = 'block';
+    const progressBar = document.getElementById('progressBar');
+    let seconds = 15;
+    let width = 0;
+    progressBar.style.width = '0%';
+    progressBar.innerText = '0%';
 
-      // Quando o limite de propagandas for atingido, libera a recompensa
-      if (contador >= maxPropagandas) {
-        recompensaElement.style.display = 'block';
+    const interval = setInterval(() => {
+      width += 100 / 15;
+      progressBar.style.width = width + '%';
+      progressBar.innerText = Math.round(width) + '%';
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(interval);
+        clicks[index] = true;
+        waiting = false;
+        disableAds(false);
+        document.getElementById('progressContainer').style.display = 'none';
+        checkReward();
       }
-    }
+    }, 1000);
+  }
 
-    // Adiciona evento de clique para cada propaganda
-    propagandas.forEach(propaganda => {
-      propaganda.addEventListener('click', function() {
-        exibirPopup();
-      });
+  function disableAds(state) {
+    const ads = document.querySelectorAll('.ad');
+    ads.forEach(ad => {
+      if (state) {
+        ad.classList.add('disabled');
+      } else {
+        ad.classList.remove('disabled');
+      }
     });
-  </script>
+  }
+
+  function checkReward() {
+    if (clicks.every(c => c)) {
+      document.getElementById('reward').classList.remove('hidden');
+    }
+  }
+</script>
 
 </body>
 </html>
