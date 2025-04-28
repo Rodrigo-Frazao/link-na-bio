@@ -126,7 +126,7 @@
 <div id="adArea">
   <div class="ad-slot" id="adSlot">
     <div id="loading">Carregando anúncio<span class="spinner"></span></div>
-    <!-- SCRIPT DO ANÚNCIO AQUI -->
+    <!-- Iframe do anúncio será injetado aqui -->
     <div id="adContainer"></div>
   </div>
 </div>
@@ -171,20 +171,24 @@
     loading.style.display = 'block';
     adContainer.innerHTML = '';
 
-    // Recarrega seu script de anúncio
-    const script = document.createElement('script');
-    script.async = true;
-    script.setAttribute('data-cfasync', 'false');
-    script.src = "//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js";
-    adContainer.appendChild(script);
-
-    const div = document.createElement('div');
-    div.id = "container-31b4bfb4edaeaadcc9eb478eb68e654f";
-    adContainer.appendChild(div);
-
-    setTimeout(() => {
+    const iframe = document.createElement('iframe');
+    iframe.style.width = '100%';
+    iframe.style.height = '150px';
+    iframe.style.border = 'none';
+    iframe.onload = () => {
       loading.style.display = 'none';
-    }, 1500);
+    };
+
+    adContainer.appendChild(iframe);
+
+    const adHTML = `
+      <script async="async" data-cfasync="false" src="//impetusorgansseparation.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"><\/script>
+      <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
+    `;
+
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(adHTML);
+    iframe.contentWindow.document.close();
 
     clickedAd = false;
     watching = false;
@@ -217,7 +221,7 @@
         clearInterval(counterTimer);
         continueBtn.style.display = 'inline-block';
       }
-    }, 200); // Progresso suave a cada 200ms
+    }, 200); // 20 segundos total
   }
 
   function finishAd() {
