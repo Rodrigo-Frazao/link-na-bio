@@ -29,7 +29,8 @@
       font-size: 1.2rem;
       font-weight: bold;
       color: #38bdf8;
-      margin-bottom: 2rem;
+      margin-top: 1.5rem;
+      display: none;
     }
     .redirect-box {
       background-color: #1e293b;
@@ -49,6 +50,7 @@
 
     function startCountdown(seconds) {
       const countdown = document.getElementById('countdown');
+      countdown.style.display = 'block';
       countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
       
       countdownInterval = setInterval(() => {
@@ -79,9 +81,8 @@
   <div class="container">
     <div class="redirect-box">
       <h1>Você está sendo redirecionado...</h1>
-      <p class="desc">Clique no anúncio abaixo e aguarde um momento para continuar.</p>
-      <p id="countdown">Clique no anúncio para iniciar o redirecionamento.</p>
-      <br><br>
+      <p class="desc">Clique no anúncio abaixo e aguarde para acessar o conteúdo.</p>
+
       <div id="ad-container" onclick="handleAdClick()" style="cursor: pointer;">
         <script type="text/javascript">
           atOptions = {
@@ -94,6 +95,8 @@
         </script>
         <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
       </div>
+
+      <p id="countdown"></p>
     </div>
     <footer>
       <p>&copy; 2025 - Seu Nome / Projeto</p>
