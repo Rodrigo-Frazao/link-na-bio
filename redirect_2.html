@@ -38,16 +38,6 @@
       padding: 2rem;
       box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
     }
-    .fake-button {
-      margin-top: 1rem;
-      background-color: #38bdf8;
-      color: #0f172a;
-      border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-    }
     footer {
       margin-top: 3rem;
       font-size: 0.8rem;
@@ -55,22 +45,19 @@
     }
   </style>
   <script>
-    let redirectionStarted = false;
-    let countdownInterval;
-
     function startCountdown(seconds) {
       const countdown = document.getElementById('countdown');
       countdown.style.display = 'block';
       countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
 
-      countdownInterval = setInterval(() => {
+      const interval = setInterval(() => {
         seconds--;
         if (seconds > 0) {
           countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
         } else {
-          clearInterval(countdownInterval);
+          clearInterval(interval);
           countdown.textContent = "Redirecionando agora...";
-          window.location.href = "https://instagram.com/magrinhorj_oficial";
+          window.location.href = "https://t.me/+vtUQw1nQiNg3MzI5";
           setTimeout(() => {
             window.close();
           }, 2000);
@@ -78,12 +65,13 @@
       }, 1000);
     }
 
-    function handleFakeClick() {
-      if (!redirectionStarted) {
-        redirectionStarted = true;
-        const randomSeconds = Math.floor(Math.random() * 6) + 15; // 15–20 segundos
-        startCountdown(randomSeconds);
-      }
+    window.onload = function () {
+      // Espera aleatória entre 15 e 30 segundos antes de mostrar o contador
+      const randomDelay = Math.floor(Math.random() * 16) + 15; // de 15 a 30 segundos
+      setTimeout(() => {
+        // Após tempo aleatório, inicia contagem regressiva de 10 segundos (ou o valor que quiser)
+        startCountdown(10);
+      }, randomDelay * 1000);
     }
   </script>
 </head>
@@ -91,7 +79,7 @@
   <div class="container">
     <div class="redirect-box">
       <h1>Você está sendo redirecionado...</h1>
-      <p class="desc">Clique no botão abaixo, interaja com o anúncio e aguarde o redirecionamento.</p>
+      <p class="desc">Aguarde enquanto processamos seu acesso ao conteúdo.</p>
 
       <!-- ANÚNCIO -->
       <div id="ad-container">
@@ -107,10 +95,7 @@
         <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
       </div>
 
-      <!-- BOTÃO DE INICIAR REDIRECIONAMENTO -->
-      <button class="fake-button" onclick="handleFakeClick()">Já cliquei no anúncio</button>
-
-      <!-- CONTAGEM -->
+      <!-- CONTADOR APÓS DELAY -->
       <p id="countdown"></p>
     </div>
     <footer>
