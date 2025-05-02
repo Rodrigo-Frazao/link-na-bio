@@ -37,16 +37,30 @@
       border-radius: 10px;
       padding: 2rem;
       box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
+      position: relative;
     }
-    .fake-button {
-      margin-top: 1rem;
-      background-color: #38bdf8;
-      color: #0f172a;
+    .ad-cover-button {
+      position: absolute;
+      top: 90px;
+      left: 0;
+      width: 100%;
+      height: 130px;
+      background-color: transparent;
       border: none;
-      padding: 10px 20px;
-      font-size: 1rem;
-      border-radius: 8px;
       cursor: pointer;
+      z-index: 10;
+    }
+    .ad-cover-button:after {
+      content: 'Clique aqui no anúncio para liberar o conteúdo';
+      position: absolute;
+      top: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #0ea5e9;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
     }
     footer {
       margin-top: 3rem;
@@ -54,23 +68,21 @@
       color: #94a3b8;
     }
   </style>
-  <script>
-    let redirectionStarted = false;
-    let countdownInterval;
 
+  <script>
     function startCountdown(seconds) {
       const countdown = document.getElementById('countdown');
       countdown.style.display = 'block';
-      countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
+      countdown.textContent = `Redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
 
-      countdownInterval = setInterval(() => {
+      const interval = setInterval(() => {
         seconds--;
         if (seconds > 0) {
-          countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
+          countdown.textContent = `Redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
         } else {
-          clearInterval(countdownInterval);
+          clearInterval(interval);
           countdown.textContent = "Redirecionando agora...";
-          window.location.href = "https://t.me/+vtUQw1nQiNg3MzI5";
+          window.location.href = "https://rodrigofrazao5046.hotmart.host/o-mapa-da-sua-mente-descubra-o-que-esta-te-travando-e-como-reprogramar-98c671f6-cb4c-4516-881a-3c3dde065330";
           setTimeout(() => {
             window.close();
           }, 2000);
@@ -78,20 +90,31 @@
       }, 1000);
     }
 
-    function handleFakeClick() {
-      if (!redirectionStarted) {
-        redirectionStarted = true;
-        const randomSeconds = Math.floor(Math.random() * 6) + 15; // 15–20 segundos
-        startCountdown(randomSeconds);
-      }
+    function handleAdClick(button) {
+      // Evita múltiplos cliques
+      button.style.display = "none";
+
+      // Espera aleatória de 15 a 30 segundos
+      const delay = Math.floor(Math.random() * 16) + 15; // 15 a 30 segundos
+
+      const countdown = document.getElementById('countdown');
+      countdown.style.display = 'block';
+      countdown.textContent = `Aguardando verificação...`;
+
+      setTimeout(() => {
+        startCountdown(10); // Depois do delay, inicia contagem final
+      }, delay * 1000);
     }
   </script>
 </head>
 <body>
   <div class="container">
     <div class="redirect-box">
-      <h1>Você está sendo redirecionado...</h1>
-      <p class="desc">Clique no botão abaixo, interaja com o anúncio e aguarde o redirecionamento.</p>
+      <h1>Atenção!</h1>
+      <p class="desc">Clique no anúncio abaixo para liberar o conteúdo. A contagem aparecerá após o clique.</p>
+
+      <!-- Botão invisível que cobre o anúncio e ativa a lógica -->
+      <button class="ad-cover-button" onclick="handleAdClick(this)"></button>
 
       <!-- ANÚNCIO -->
       <div id="ad-container">
@@ -107,10 +130,7 @@
         <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
       </div>
 
-      <!-- BOTÃO DE INICIAR REDIRECIONAMENTO -->
-      <button class="fake-button" onclick="handleFakeClick()">Já cliquei no anúncio</button>
-
-      <!-- CONTAGEM -->
+      <!-- CONTADOR -->
       <p id="countdown"></p>
     </div>
     <footer>
