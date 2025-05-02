@@ -37,21 +37,6 @@
       padding: 2rem;
       box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
     }
-    .loader {
-      position: absolute;
-      left: 70px;
-      margin-top: 2rem;
-      border: 5px solid #1e3a8a;
-      border-top: 5px solid #f1f5f9;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
     footer {
       margin-top: 3rem;
       font-size: 0.8rem;
@@ -59,43 +44,57 @@
     }
   </style>
   <script>
-    // Redirecionamento após 15 segundos
-    setTimeout(function () {
-      window.location.href = "https://t.me/+vtUQw1nQiNg3MzI5";
-    }, 15000);
+    let redirectionStarted = false;
+    let countdownInterval;
 
-    // Contador regressivo
-    let seconds = 15;
-    function updateCountdown() {
+    function startCountdown(seconds) {
       const countdown = document.getElementById('countdown');
-      countdown.textContent = `Aguarde... você está sendo redirecionado em ${seconds} segundo${seconds !== 1 ? 's' : ''}... Quer ir mais rápido? Toque no anuncio abaixo.`;
-      seconds--;
-      if (seconds >= 0) {
-        setTimeout(updateCountdown, 1000);
+      countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
+      
+      countdownInterval = setInterval(() => {
+        seconds--;
+        if (seconds > 0) {
+          countdown.textContent = `Aguarde... redirecionando em ${seconds} segundo${seconds !== 1 ? 's' : ''}...`;
+        } else {
+          clearInterval(countdownInterval);
+          countdown.textContent = "Redirecionando agora...";
+          window.location.href = "https://t.me/+vtUQw1nQiNg3MzI5";
+          setTimeout(() => {
+            window.close();
+          }, 2000);
+        }
+      }, 1000);
+    }
+
+    function handleAdClick() {
+      if (!redirectionStarted) {
+        redirectionStarted = true;
+        const randomSeconds = Math.floor(Math.random() * 6) + 15; // 15 a 20 segundos
+        startCountdown(randomSeconds);
       }
     }
-    window.onload = updateCountdown;
   </script>
 </head>
 <body>
   <div class="container">
     <div class="redirect-box">
       <h1>Você está sendo redirecionado...</h1>
-      <p class="desc">Aguarde um instante, estamos te levando ao conteúdo solicitado.</p>
-      <p id="countdown"></p>
+      <p class="desc">Clique no anúncio abaixo e aguarde um momento para continuar.</p>
+      <p id="countdown">Clique no anúncio para iniciar o redirecionamento.</p>
       <br><br>
-      <script type="text/javascript">
-        atOptions = {
-          'key' : 'd1b7ad64e08488116b4573d06e9029d7',
-          'format' : 'iframe',
-          'height' : 122,
-          'width' : 499,
-          'params' : {}
-        };
-      </script>
-      <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
+      <div id="ad-container" onclick="handleAdClick()" style="cursor: pointer;">
+        <script type="text/javascript">
+          atOptions = {
+            'key' : 'd1b7ad64e08488116b4573d06e9029d7',
+            'format' : 'iframe',
+            'height' : 122,
+            'width' : 499,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
+      </div>
     </div>
-
     <footer>
       <p>&copy; 2025 - Seu Nome / Projeto</p>
     </footer>
