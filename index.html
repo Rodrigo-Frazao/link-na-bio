@@ -1,225 +1,341 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <!-- Twitter conversion tracking base code -->
-<script>
-!function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
-},s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='https://static.ads-twitter.com/uwt.js',
-a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
-twq('config','py4oy');
-</script>
-<!-- End Twitter conversion tracking base code -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Links importantes, conteúdos e recomendações. Acesse tudo em um só lugar!">
-  <title>Meus Links | Nome do Projeto</title>
-  <style>
-    .slider {
-  position: relative;
-  overflow: hidden;
-  height: 60px;
-}
-.slide {
-  position: absolute;
-  width: 100%;
-  opacity: 0;
-  animation: slideFade 12s infinite;
-  text-align: center;
-}
-.slide:nth-child(1) { animation-delay: 0s; }
-.slide:nth-child(2) { animation-delay: 4s; }
-.slide:nth-child(3) { animation-delay: 8s; }
-
-@keyframes slideFade {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  30% { opacity: 1; }
-  40% { opacity: 0; }
-  100% { opacity: 0; }
-}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>💋 Meus Links</title>
+<style>
+    /* ====== ESTILO GERAL ====== */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #0f172a;
-      color: #f1f5f9;
-      text-align: center;
-      padding: 2rem;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a1a1a, #0f0f0f);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
     }
-    #weather {
-    background-color: #1e3a8a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    with: 20px;
-    border-radius: 10px;
+
+    /* ====== CABEÇALHO ====== */
+    .header {
+        text-align: center;
+        margin-top: 40px;
     }
-    .container {
-      max-width: 500px;
-      margin: 0 auto;
+
+    .header img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 3px solid #ff006e;
+        box-shadow: 0 0 20px #ff006e;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+
+    .header h1 {
+        margin: 20px 0 10px 0;
+        font-size: 28px;
+        font-weight: bold;
+        text-shadow: 0 0 8px #ff006e;
     }
-    p.desc {
-      font-size: 1rem;
-      margin-bottom: 2rem;
-      color: #cbd5e1;
+
+    .header p {
+        font-size: 16px;
+        color: #ccc;
     }
-    .link-btn {
-      display: block;
-      margin: 0.5rem 0;
-      padding: 1rem;
-      background-color: #1e3a8a;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
+
+    /* ====== CONTAINER DE LINKS ====== */
+    .links-container {
+        margin-top: 30px;
+        width: 90%;
+        max-width: 500px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
     }
-    .link-btn:hover {
-      background-color: #1d4ed8;
+
+    /* ====== CARDS ====== */
+    .link-card {
+        display: block;
+        text-decoration: none;
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 20px;
+        text-align: center;
+        border-radius: 15px;
+        border: 1px solid rgba(255,255,255,0.1);
+        box-shadow: inset 0 0 15px rgba(0,0,0,0.6);
+        font-size: 18px;
+        font-weight: 600;
+        transition: all 0.3s ease;
     }
-    .ads-section, .content-section {
-      background: #1e293b;
-      border-radius: 10px;
-      padding: 1rem;
-      margin: 1.5rem 0;
-      box-shadow: 0 2px 8px rgba(255,255,255,0.05);
+
+    .link-card:hover {
+        background: rgba(255, 0, 110, 0.2);
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #ff006e;
     }
+
+    /* ====== BOTÃO DE COMPRA/PRIVACY ====== */
+    .buy-card {
+        background: linear-gradient(90deg, #ff006e, #ff4b2b);
+        color: #fff;
+        font-weight: bold;
+        font-size: 20px;
+        box-shadow: 0 0 25px #ff4b2b;
+        animation: pulse 1.5s infinite;
+    }
+
+    .buy-card:hover {
+        background: linear-gradient(90deg, #ff4b2b, #ff006e);
+        transform: scale(1.08);
+        box-shadow: 0 0 30px #ff006e;
+    }
+
+    @keyframes pulse {
+        0% { box-shadow: 0 0 20px #ff4b2b; }
+        50% { box-shadow: 0 0 40px #ff006e; }
+        100% { box-shadow: 0 0 20px #ff4b2b; }
+    }
+
+    /* ====== RODAPÉ ====== */
     footer {
-      margin-top: 3rem;
-      font-size: 0.8rem;
-      color: #94a3b8;
-    }
-    .scroll-down {
-      margin-top: 1.5rem;
-      font-size: 1.15rem;
-      color: #facc15;
-      font-weight: bold;
-      animation: bounce 2s infinite;
-    }
-    .scroll-down .arrow {
-      display: inline-block;
-      margin-top: 0.3rem;
-      font-size: 1.5rem;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(5px); }
+        margin-top: auto;
+        padding: 20px;
+        font-size: 14px;
+        color: #666;
     }
 
-    nav {
-      background-color: #1e293b;
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-    }
-    nav a {
-      margin: 0 10px;
-      color: #f1f5f9;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #facc15;
+    /* ====== POPUP ====== */
+    #adPopup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: none; /* mostrado via JS */
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
-  </style>
+    .popup-content {
+        position: relative;
+        background: #1a1a1a;
+        padding: 24px;
+        border-radius: 14px;
+        max-width: 480px;
+        width: 100%;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 25px #ff006e;
+        border: 1px solid rgba(255,255,255,0.04);
+        text-align: center;
+        animation: popupIn 0.28s ease;
+        color: #fff;
+    }
+
+    @keyframes popupIn {
+        from { opacity: 0; transform: translateY(-6px) scale(0.995); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .popup-content h2 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        text-shadow: 0 0 6px #ff006e;
+    }
+
+    .popup-content p {
+        margin: 8px 0 0 0;
+        color: #ccc;
+        font-size: 15px;
+    }
+
+    .count {
+        font-size: 22px;
+        margin: 12px 0;
+        color: #ff006e;
+        font-weight: 700;
+    }
+
+    /* Animação do contador */
+    @keyframes pulseTimer {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.3); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .count.animate {
+        animation: pulseTimer 0.5s ease;
+    }
+
+    .continue {
+        display: inline-block;
+        background: linear-gradient(90deg, #ff006e, #ff4b2b);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        border: none;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.18s ease;
+    }
+
+    .continue:disabled {
+        background: #333;
+        color: #999;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .continue:not(:disabled):active {
+        transform: scale(0.98);
+    }
+
+    @media (max-width:420px){
+        .header img { width:100px; height:100px; }
+        .header h1 { font-size:24px; }
+        .popup-content { padding:18px; }
+    }
+</style>
 </head>
 <body>
-  <div class="container">
-    <nav>
-      <a href="index.html">Início</a>
-      <a href="blog.html">Blog</a>
-      <a href="privacidade.html">Privacidade</a>
-      <a href="termos.html">Termos</a>
-    </nav>
-   
-    <div id="weather">Carregando clima...</div>
-    <div class="content-section">
-  <h2>Dica da Semana ✨</h2>
-  <div class="slider">
-    <div class="slide">🌱 Pequenas mudanças diárias geram grandes transformações.</div>
-    <div class="slide">💡 Acorde 30 minutos mais cedo e veja sua produtividade mudar.</div>
-    <div class="slide">🧘‍♂️ Respire fundo 3x antes de começar o dia e sinta a diferença.</div>
-  </div>
-</div>
-    <div class="ads-section" style="display: flex; justify-content: center; margin: 1.5rem 0;">
-  <script type="text/javascript">
-    atOptions = {
-      'key': 'd1b7ad64e08488116b4573d06e9029d7',
-      'format': 'iframe',
-      'height': 60,
-      'width': 468,
-      'params': {}
-    };
-  </script>
-  <script type="text/javascript" src="//impetusorgansseparation.com/d1b7ad64e08488116b4573d06e9029d7/invoke.js"></script>
-</div>
-    <h1>Oi! Sou eu mesmo Magrinho RJ!</h1>
-    <p class="desc">Aqui você encontra meus links mais importantes, conteúdos, grupos vip e recomendações. Seja bem-vindo(a)!</p>
- <div class="scroll-down">
-      <span>Role para ver mais</span><br>
-      <span class="arrow">⬇️</span>
-    </div>
-    <a class="link-btn" href="https://onlyfans.com/frazaomalvado">🎥 Onlyfans</a>
-    <a class="link-btn" href="https://privacy.com.br/profile/Magrinhorj02">🎥 Privacy free</a>
-    <a class="link-btn" href="https://magrinhorj.online/redirect_3">📘 Descubra oque esta te travando e te impedindo de progredir!</a>
-    <a class="link-btn" href="https://magrinhorj.online/redirect_2.html">📸 Me siga no Instagram</a>
-    <a class="link-btn" href="https://magrinhorj.online/redirect.html">💬 Entre no grupo do telegram</a>
-    <a class="link-btn" href="https://magrinhorj.online/redirect_wpp.html">💬 Fale comigo no whatsapp</a>
 
-    <div class="content-section">
-      <h2>📘 Meu eBook: O Mapa da Sua Mente</h2>
-      <p>Descubra o que está te travando e como reprogramar sua mente para avançar com confiança.</p>
-      <a class="link-btn" href="https://magrinhorj.online" target="_blank">Acesse a página do eBook</a>
+    <!-- ====== CABEÇALHO ====== -->
+    <div class="header">
+        <img src="https://via.placeholder.com/120" alt="Minha Foto">
+        <h1>💋 Meus Links</h1>
+        <p>Conteúdos exclusivos + redes sociais</p>
     </div>
+
+    <!-- ====== LINKS ====== -->
+    <div class="links-container">
+        <a href="https://example.com/privacy" class="link-card buy-card">🔥 Privacy Free</a>
+        <a href="https://t.me/seugrupo" class="link-card">💦 Grupo de Prévias (Telegram)</a>
+        <a href="https://instagram.com/seuuser" class="link-card">📸 Instagram</a>
+        <a href="https://wa.me/seunumero" class="link-card">💌 WhatsApp</a>
+    </div>
+
+    <!-- POPUP DE ANÚNCIO -->
+    <div id="adPopup" aria-hidden="true">
+        <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="adTitle">
+            <!-- Botão X para fechar -->
+            <button id="closePopup" style="
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: transparent;
+                border: none;
+                color: #fff;
+                font-size: 22px;
+                cursor: pointer;
+                font-weight: bold;
+            ">×</button>
+
+            <h2 id="adTitle">🎯 Anúncio</h2>
+
+            <script async="async" data-cfasync="false" src="//majorbarefooted.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
+            <div id="container-31b4bfb4edaeaadcc9eb478eb68e654f"></div>
+
+            <p>Clique no anúncio para continuar</p>
+            <div class="count">Aguarde <span id="timer">45</span> segundos</div>
+            <button id="continueBtn" class="continue" disabled>Clique para Continuar</button>
+        </div>
+    </div>
+
     <footer>
-      <p><a href="privacidade.html">Política de Privacidade</a> | <a href="termos.html">Termos de Uso</a></p>
-      <p>&copy; 2025 - Seu Nome / Projeto</p>
+        ⚠️ Conteúdo exclusivo para maiores de 18 anos
     </footer>
-  </div>
+
 <script>
-  const weatherDiv = document.getElementById("weather");
+(function(){
+    const adPopup = document.getElementById('adPopup');
+    const timerEl = document.getElementById('timer');
+    const continueBtn = document.getElementById('continueBtn');
+    const closeBtn = document.getElementById('closePopup');
 
-  async function getLocation() {
-    const res = await fetch('https://ipinfo.io/json?token=6df3d98dc38058');
-    const data = await res.json();
-    const [lat, lon] = data.loc.split(',');
-    return { lat, lon, city: data.city };
-  }
+    const links = document.querySelectorAll('.link-card');
 
-  async function getWeather(lat, lon) {
-    const apiKey = '9274a753db7aa09db65213be8308d139';
-    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`);
-    return await res.json();
-  }
+    let countdown = null;
+    const secondsDefault = 45; // contador inicial 45s
+    let seconds = secondsDefault;
+    let targetLink = null;
 
-  function getEmoji(description) {
-    const desc = description.toLowerCase();
-    if (desc.includes("chuva")) return "🌧️";
-    if (desc.includes("nuvem")) return "☁️";
-    if (desc.includes("neve")) return "❄️";
-    if (desc.includes("nevoeiro") || desc.includes("névoa")) return "🌫️";
-    if (desc.includes("tempestade") || desc.includes("trovoada")) return "🌩️";
-    if (desc.includes("sol") || desc.includes("claro")) return "☀️";
-    return "🌤️";
-  }
+    links.forEach(link => {
+        link.addEventListener('click', function(e){
+            e.preventDefault();
+            targetLink = link.href;
+            openAd();
+        }, {passive:false});
+    });
 
-  async function showWeather() {
-    try {
-      const { lat, lon, city } = await getLocation();
-      const weather = await getWeather(lat, lon);
-      const temp = Math.round(weather.main.temp);
-      const emoji = getEmoji(weather.weather[0].description);
-      weatherDiv.innerHTML = `${emoji} ${temp}°C em ${city}`;
-    } catch (e) {
-      weatherDiv.innerHTML = "Não foi possível obter o clima 😔";
+    function openAd(){
+        adPopup.style.display = 'flex';
+        adPopup.setAttribute('aria-hidden','false');
+
+        // reinicia contador
+        if (countdown) clearInterval(countdown);
+        seconds = secondsDefault;
+        timerEl.textContent = seconds;
+        continueBtn.disabled = true;
+
+        // altera a frase
+        const countdownText = document.querySelector('.popup-content p');
+        if (countdownText) {
+            countdownText.textContent = "Clique no anúncio para continuar";
+        }
+
+        // se o usuário clicar no anúncio, tempo diminui para 15s
+        const adContainer = document.getElementById('container-31b4bfb4edaeaadcc9eb478eb68e654f');
+        if (adContainer) {
+            adContainer.addEventListener('click', () => {
+                seconds = 15;
+                timerEl.textContent = seconds;
+            }, { once: true });
+        }
+
+        countdown = setInterval(()=>{
+            seconds--;
+            timerEl.textContent = seconds;
+
+            // animação de contagem
+            timerEl.classList.remove('animate');
+            void timerEl.offsetWidth; // reinicia animação
+            timerEl.classList.add('animate');
+
+            if(seconds <= 0){
+                clearInterval(countdown);
+                countdown = null;
+                continueBtn.disabled = false;
+
+                // redireciona automaticamente quando chega a 0
+                if (targetLink) {
+                    window.location.href = targetLink;
+                }
+            }
+        }, 1000);
     }
-  }
 
-  showWeather();
+    continueBtn.addEventListener('click', function(){
+        if (targetLink) {
+            window.location.href = targetLink;
+        }
+    });
+
+    // funcionalidade do botão X
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            adPopup.style.display = 'none';
+            if (countdown) clearInterval(countdown);
+        });
+    }
+
+})();
 </script>
+
 </body>
 </html>
