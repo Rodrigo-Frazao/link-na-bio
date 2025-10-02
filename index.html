@@ -99,6 +99,13 @@
         <div class="popup-content" role="dialog" aria-modal="true" aria-labelledby="adTitle">
             <button id="closePopup" style="position:absolute;top:10px;right:10px;background:transparent;border:none;color:#fff;font-size:22px;cursor:pointer;font-weight:bold;">×</button>
             <h2 id="adTitle">🎯 Anúncio</h2>
+
+            <!-- 🔹 Anúncio dentro do popup -->
+            <div style="margin:15px 0;">
+                <script async="async" data-cfasync="false" src="//rayvirtual.com/31b4bfb4edaeaadcc9eb478eb68e654f/invoke.js"></script>
+                <div id="popup-ad"></div>
+            </div>
+
             <p>Clique no anúncio para continuar</p>
             <div class="count">Aguarde <span id="timer">45</span> segundos</div>
             <button id="continueBtn" class="continue" disabled>Ou Clique para Continuar</button>
@@ -147,6 +154,15 @@
         seconds = secondsDefault;
         timerEl.textContent = seconds;
         continueBtn.disabled = true;
+
+        // Se clicar no anúncio dentro do popup -> reduz tempo para 15s
+        const adInside = document.getElementById('popup-ad');
+        if (adInside) {
+            adInside.addEventListener('click', () => {
+                seconds = 15;
+                timerEl.textContent = seconds;
+            }, { once: true });
+        }
 
         countdown = setInterval(()=>{
             seconds--; timerEl.textContent = seconds;
