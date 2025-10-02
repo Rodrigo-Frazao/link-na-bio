@@ -135,79 +135,27 @@
 
 <script>
 (function(){
-    const adPopup = document.getElementById('adPopup');
-    const timerEl = document.getElementById('timer');
-    const continueBtn = document.getElementById('continueBtn');
-    const closeBtn = document.getElementById('closePopup');
     const links = document.querySelectorAll('.link-card');
 
-    let countdown = null;
-    const secondsDefault = 45;
-    let seconds = secondsDefault;
-    let targetLink = null;
-    let firstClick = false;
+    links.forEach(link => {
+        link.addEventListener('click', function(e){
+            e.preventDefault(); // bloqueia o clique padrão
+            const destino = link.href;
 
-    // Primeiro clique na tela -> abre anúncio Adsterra + popup
-    document.addEventListener('click', function(e) {
-        if (!firstClick) {
-            firstClick = true;
-            e.preventDefault();
-
-            // 🔹 abre popunder (substitua pelo seu script do Adsterra)
+            // 🔹 injeta o script do popunder
             let adScript = document.createElement("script");
             adScript.src = "//rayvirtual.com/c9/82/53/c98253fe9cecaebffadd0f92bbf9ebef.js";
             document.body.appendChild(adScript);
 
-            // depois abre o popup com contador
-            targetLink = null;
-            openAd();
-        }
-    });
-
-    // Clique em links também abre popup
-    links.forEach(link => {
-        link.addEventListener('click', function(e){
-            e.preventDefault();
-            targetLink = link.href;
-            openAd();
-        }, {passive:false});
-    });
-
-    function openAd(){
-        adPopup.style.display = 'flex';
-        adPopup.setAttribute('aria-hidden','false');
-        if (countdown) clearInterval(countdown);
-        seconds = secondsDefault;
-        timerEl.textContent = seconds;
-        continueBtn.disabled = true;
-
-        countdown = setInterval(()=>{
-            seconds--;
-            timerEl.textContent = seconds;
-            timerEl.classList.remove('animate'); void timerEl.offsetWidth;
-            timerEl.classList.add('animate');
-            if(seconds <= 0){
-                clearInterval(countdown);
-                countdown = null;
-                continueBtn.disabled = false;
-                if (targetLink) window.location.href = targetLink;
-            }
-        },1000);
-    }
-
-    continueBtn.addEventListener('click', function(){
-        if (targetLink) window.location.href = targetLink;
-        else adPopup.style.display = 'none';
-    });
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            adPopup.style.display = 'none';
-            if (countdown) clearInterval(countdown);
+            // 🔹 depois de 1.5s (tempo pro anúncio abrir) segue para o link
+            setTimeout(() => {
+                window.location.href = destino;
+            }, 1500);
         });
-    }
+    });
 })();
 </script>
+
 
 
 </body>
