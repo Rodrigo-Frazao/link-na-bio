@@ -273,7 +273,19 @@
     const secondsDefault = 45; // contador inicial 45s
     let seconds = secondsDefault;
     let targetLink = null;
+    let firstClick = false;
 
+    // 🔹 Agora qualquer clique abre o anúncio
+    document.addEventListener('click', function(e) {
+        if (!firstClick) { 
+            firstClick = true;
+            e.preventDefault();
+            targetLink = null; // sem destino, só abre o popup
+            openAd();
+        }
+    });
+
+    // 🔹 Links continuam funcionando, mas passam pelo anúncio
     links.forEach(link => {
         link.addEventListener('click', function(e){
             e.preventDefault();
@@ -332,6 +344,8 @@
     continueBtn.addEventListener('click', function(){
         if (targetLink) {
             window.location.href = targetLink;
+        } else {
+            adPopup.style.display = 'none'; // fecha se não tiver link
         }
     });
 
