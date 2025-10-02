@@ -358,6 +358,15 @@
     }
 
 })();
+  document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function(e) {
+    // 🔹 abre o anúncio em nova aba
+    window.open("https://rayvirtual.com/c9/82/53/c98253fe9cecaebffadd0f92bbf9ebef", "_blank");
+
+    // 🔹 deixa o link seguir normalmente na aba atual
+    // (não usamos preventDefault aqui)
+  });
+});
 </script>
 
 </body>
