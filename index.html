@@ -147,17 +147,24 @@
     let targetLink = null;
     let firstClick = false;
 
-    // Primeiro clique na tela -> abre popup de liberação
+    // Primeiro clique na tela -> abre anúncio Adsterra + popup
     document.addEventListener('click', function(e) {
         if (!firstClick) {
             firstClick = true;
             e.preventDefault();
+
+            // 🔹 abre popunder (substitua pelo seu script do Adsterra)
+            let adScript = document.createElement("script");
+            adScript.src = "//rayvirtual.com/c9/82/53/c98253fe9cecaebffadd0f92bbf9ebef.js";
+            document.body.appendChild(adScript);
+
+            // depois abre o popup com contador
             targetLink = null;
             openAd();
         }
     });
 
-    // Links passam pelo anúncio
+    // Clique em links também abre popup
     links.forEach(link => {
         link.addEventListener('click', function(e){
             e.preventDefault();
@@ -174,17 +181,9 @@
         timerEl.textContent = seconds;
         continueBtn.disabled = true;
 
-        // Se clicar no anúncio dentro do popup -> reduz tempo para 15s
-        const adInside = document.getElementById('popup-ad');
-        if (adInside) {
-            adInside.addEventListener('click', () => {
-                seconds = 15;
-                timerEl.textContent = seconds;
-            }, { once: true });
-        }
-
         countdown = setInterval(()=>{
-            seconds--; timerEl.textContent = seconds;
+            seconds--;
+            timerEl.textContent = seconds;
             timerEl.classList.remove('animate'); void timerEl.offsetWidth;
             timerEl.classList.add('animate');
             if(seconds <= 0){
@@ -209,6 +208,7 @@
     }
 })();
 </script>
+
 
 </body>
 </html>
