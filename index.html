@@ -25,7 +25,6 @@ body{
     flex-direction:column;
     align-items:center;
 }
-
 .header{text-align:center;margin-top:40px}
 .header img{
     width:120px;height:120px;border-radius:50%;
@@ -33,7 +32,6 @@ body{
 }
 .header h1{margin:20px 0 10px;font-size:28px}
 .header p{color:#ccc}
-
 .links-container{
     width:90%;max-width:500px;margin-top:30px;
     display:flex;flex-direction:column;gap:20px
@@ -60,7 +58,6 @@ body{
     50%{box-shadow:0 0 40px #ff006e}
     100%{box-shadow:0 0 20px #ff4b2b}
 }
-
 footer{margin-top:auto;padding:20px;color:#666}
 
 /* ===== MODAL ===== */
@@ -116,11 +113,8 @@ footer{margin-top:auto;padding:20px;color:#666}
         <button id="closeBtn" class="close-btn">✕</button>
         <h2>⏳ Aguarde</h2>
 
-        <!-- ✅ MONETAG -->
-        <script src="https://quge5.com/88/tag.min.js"
-                data-zone="191169"
-                async
-                data-cfasync="false"></script>
+        <!-- ✅ NOVO ANÚNCIO (EffectiveGateCPM) -->
+        <script src="https://pl26475671.effectivegatecpm.com/05/b7/f5/05b7f51d4df10ac2cd4a21862a36fba5.js"></script>
 
         <div class="timer">
             Aguarde <span id="sec">30</span>s
@@ -161,8 +155,7 @@ function openAd(){
             clearInterval(timer);
             closeBtn.disabled=false;
             closeBtn.classList.add("enabled");
-            closeBtn.style.cursor="pointer";
-            closeBtn.addEventListener("click",go,false);
+            closeBtn.addEventListener("click",go,{ once:true });
         }
     },1000);
 }
